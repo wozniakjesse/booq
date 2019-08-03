@@ -60,4 +60,64 @@ html {
   box-sizing: inherit;
 }
 
+/*
+*    Global
+*/
+.text-center {
+    text-align: center;
+}
+.text-right {
+    text-align: right;
+}
+.text-left {
+    text-align: left;
+}
+a.animate, a.animate:hover {
+    transition: 0.2s all;
+}
 
+
+/*
+*    Fonts
+*/
+body {
+    font-family: "Helvetica", "Arial", sans-serif;
+}
+.small-caption {
+    font-size: 0.8em;    
+    font-style: italic;
+}
+
+
+/*
+*    Header
+*/
+.header-home-link {
+    background-color: red;
+    padding: 10px 0px 20px;
+}
+.header-home-link a {
+    color: white;
+    display: inline-block;
+    font-size: 2em;
+    font-weight: 700;
+    padding: 10px 40px;
+    text-decoration: none;
+}
+.header-home-link a:hover {
+    color: black;
+}
+#main-navigation ul {
+    background-color: black;
+}
+#main-navigation ul li {
+    display: inline-block;
+    padding: 20px;
+}
+#main-navigation a {
+    color: white;
+    text-decoration: none;
+}
+#main-navigation a:hover {
+    color: red;
+}
