@@ -79,13 +79,51 @@ html {
 	padding-left: 15px;
 	padding-right: 15px;
 	width: 100%;
+	*zoom: 1;
+}
+.container:before,
+.container:after {
+    content: " ";
+    display: table;
+}
+.container:after {
+    clear: both;
+}
+.half {
+	display: inline-block;
+	float: left;
+	width: 50%;
 }
 .section {
 	padding-top: 50px;
 	padding-bottom: 50px;
 }
+.section.highlight {
+	border-top: 50px solid black;
+	border-bottom: 50px solid black;
+	background-color: red;
+	padding: 0px;
+}
 a.animate, a.animate:hover {
     transition: 0.2s all;
+}
+img {
+	padding: 20px;
+	max-width: 100%;
+}
+.cta {
+	background-color: blue;
+	border: 3px solid blue;
+	color: white;
+	display: inline-block;
+	font-weight: 700;
+	padding: 20px 40px;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+.cta:hover {
+	background-color: white;
+	color: blue;
 }
 
 
@@ -95,9 +133,20 @@ a.animate, a.animate:hover {
 body {
     font-family: "Helvetica", "Arial", sans-serif;
 }
+p.no-margin {
+	margin: 0px;
+}
 .small-caption {
     font-size: 0.8em;    
     font-style: italic;
+}
+.emphasis {
+	font-size: 1.4em;
+	line-height: 1.75em;
+	font-weight: 500;
+}
+em {
+	font-style: italic;
 }
 h1, h2, h3, h4, h5, h6 {
 	font-weight: 700;
@@ -105,6 +154,27 @@ h1, h2, h3, h4, h5, h6 {
 }
 h1 {
 	font-size: 2.5em;
+}
+h2 {
+	font-size: 2em;
+}
+li, p {
+	line-height: 1.5em;
+	margin-bottom: 20px;
+}
+ul {
+	padding-left: 20px;
+}
+li:before {
+	content: '$';
+	display: block;
+	position: relative;
+	max-width: 0px;
+	max-height: 0px;
+	left: -20px;
+	top: -1px;
+	color: green;
+	font-size: 1.4em;
 }
 
 
@@ -128,9 +198,11 @@ h1 {
 }
 #main-navigation ul {
     background-color: black;
+	padding: 0px;
 }
 #main-navigation ul li {
     display: inline-block;
+	margin: 0px;
     padding: 20px;
 }
 #main-navigation a {
@@ -139,4 +211,27 @@ h1 {
 }
 #main-navigation a:hover {
     color: red;
+	border-bottom: 2px solid red;
+}
+
+/*
+*	Carousel
+*/
+.carousel-controls {
+	margin: 10px 0px;
+}
+.carousel img {
+	display: block;
+	margin: 0px auto;
+	max-width: 800px;
+	width: 100%;
+}
+
+/*
+*	Homepage
+*/
+.center-vid {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
