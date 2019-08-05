@@ -1,4 +1,8 @@
 const SLIDER_INTERVAL = 7000;
+const ICON_MAX = 11;
+const DOLLA_FLASH_SPEED = 300;
+const LIST_FLASH_SPEED = 700;
+const FLASH_CLASS = ' flash';
 
 if (document.getElementsByClassName('siema').length > 0) {
     /* https://pawelgrzybek.github.io/siema/ */
@@ -33,11 +37,49 @@ if (document.getElementsByClassName('siema').length > 0) {
 /*
 *   Ridiculous fancy divider
 */
+function animateDivider(divider) {
+    if (divider.childNodes.length < ICON_MAX) {
+        for (let i = 0; i < 2; ++i) {
+            addDollaSign(divider);
+        }
+    } else {
+        divider.innerHTML = "";
+        addDollaSign(divider);
+    }
+}
+
+function addDollaSign(el) {
+    let dollaSign = document.createElement('span');
+    dollaSign.textContent = "$";
+    el.appendChild(dollaSign);
+}
+
 let dividers = document.getElementsByClassName('fancy-divider');
 for (let i = 0; i < dividers.length; ++i) {
-    for (let j = 0; j < 7; ++j) {
-        let dollaSign = document.createElement('span');
-        dollaSign.textContent = "$";
-        dividers[i].appendChild(dollaSign);
-    }
+    addDollaSign(dividers[i]);
+    setInterval(function() {
+        animateDivider(dividers[i]);
+    }, DOLLA_FLASH_SPEED);
+}
+
+
+/*
+*   Flashing List Bullets
+*/
+function animateLists(el) {
+    let flashClass = 'flash';
+    let classes = el.className.split(' ');
+    let classIndex = classes.indexOf(flashClass);
+    if (classIndex == -1)
+        classes.push(flashClass);    
+    else
+        classes.splice(classIndex, 1);
+    el.className = classes.join(' ');
+}
+
+let lists = document.getElementsByTagName('li');
+for (let i = 0; i < lists.length; ++i) {
+    setInterval(function() {
+        animateLists(lists[i]);
+    }, LIST_FLASH_SPEED);
 }

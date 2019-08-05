@@ -197,6 +197,9 @@ li:before {
 	color: green;
 	font-size: 1.4em;
 }
+li.flash:before {
+	display: none;
+}
 
 
 /*
