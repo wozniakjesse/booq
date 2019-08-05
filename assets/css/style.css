@@ -268,6 +268,30 @@ li:before {
 }
 
 /*
+*	Fun
+*/
+.scroll-box {
+	height: 200px;
+	overflow-y: scroll;
+}
+.scroll-box ul {
+	padding: 0px;
+}
+.scroll-box ul li:before {
+	display: none;
+}
+.scroll-box ul li {
+	margin: 0px;
+	padding: 10px 30px;
+}
+.scroll-box ul li:nth-child(2n) {
+	background-color: gray;
+}
+.scroll-box ul li:nth-child(2n+1) {
+	background-color: lightblue;
+}
+
+/*
 *	Footer
 */
 footer {
