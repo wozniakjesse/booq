@@ -32,5 +32,3 @@ for (let i = 0; i < dividers.length; ++i) {
         dividers[i].appendChild(dollaSign);
     }
 }
-
-    
