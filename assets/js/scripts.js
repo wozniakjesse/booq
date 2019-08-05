@@ -10,8 +10,14 @@ if (document.getElementsByClassName('siema').length > 0) {
         carousel.next();
     }, SLIDER_INTERVAL);
 
-    let prevBtn = document.getElementById('carousel-prev');
-    let nextBtn = document.getElementById('carousel-next');
+    let prevBtn = document.createElement('button');
+    prevBtn.textContent = "<";
+    prevBtn.className += " carousel-button";
+    let nextBtn = document.createElement('button');
+    nextBtn.textContent = ">";
+    nextBtn.className += " carousel-button";
+    
+    let buttonContainer = document.getElementById('carousel-button-container');
 
     prevBtn.addEventListener('click', function() {
         carousel.prev();
@@ -19,6 +25,9 @@ if (document.getElementsByClassName('siema').length > 0) {
     nextBtn.addEventListener('click', function() {
         carousel.next();
     });
+    
+    buttonContainer.appendChild(prevBtn);
+    buttonContainer.appendChild(nextBtn);
 }
 
 /*

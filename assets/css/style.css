@@ -247,6 +247,11 @@ li:before {
 	max-width: 800px;
 	width: 100%;
 }
+.carousel-button {
+	background-color: blue;
+	color: white;
+	padding: 10px;
+}
 
 /*
 *	Homepage
