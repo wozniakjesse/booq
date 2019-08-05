@@ -256,6 +256,9 @@ li:before {
 	margin-left: auto;
 	margin-right: auto;
 }
+#plan {
+	background-color: red;
+}
 
 /*
 *	Footer
