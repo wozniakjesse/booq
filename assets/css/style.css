@@ -261,6 +261,13 @@ li:before {
 }
 
 /*
+*	Rooms
+*/
+.room-entry {
+	padding: 40px;
+}
+
+/*
 *	Footer
 */
 footer {
