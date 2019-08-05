@@ -292,6 +292,20 @@ li:before {
 }
 
 /*
+*	Contact
+*/
+label {
+	display: block;
+	font-weight: 700;
+	margin-bottom: 30px;
+}
+input, textarea {
+	margin-top: 10px;
+	padding: 5px 10px;
+	width: 500px;
+}
+
+/*
 *	Footer
 */
 footer {
