@@ -89,10 +89,15 @@ html {
 .container:after {
     clear: both;
 }
-.half {
+.half, .third {
 	display: inline-block;
 	float: left;
+}
+.half {
 	width: 50%;
+}
+.third {
+	width: 33.333333%;
 }
 .section {
 	padding-top: 50px;
@@ -125,7 +130,17 @@ img {
 	background-color: white;
 	color: blue;
 }
-
+.fancy-divider {
+	color: green;
+	font-size: 2em;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	text-align: center;
+}
+.fancy-divider span {
+	margin-left: 20px;
+	margin-right: 20px;
+}
 
 /*
 *    Fonts
@@ -157,6 +172,12 @@ h1 {
 }
 h2 {
 	font-size: 2em;
+}
+h3 {
+	font-size: 1.75em;
+}
+h4 {
+	font-size: 1.5em;
 }
 li, p {
 	line-height: 1.5em;
@@ -234,4 +255,15 @@ li:before {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+/*
+*	Footer
+*/
+footer {
+	background-color: black;
+	color: white;
+}
+footer a {
+	color: white;
 }
