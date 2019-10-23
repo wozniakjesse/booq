@@ -3,6 +3,5 @@
 
 **To Run:**
 
-1. Place files in a folder accessible by a webserver like Apache
-2. Create a VirtualHost that maps a domain to this folder
-3. Visit the domain in a web browser
+1. Run the following command to start with node: "npm run start"
+2. Optional - run using forever: "npm run forever-start" and stop forever process with "npm run forever-stop"
