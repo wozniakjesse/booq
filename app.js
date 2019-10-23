@@ -15,8 +15,43 @@ app.use('/assets', express.static(__dirname + '/assets'));
 
 
 app.get('/', function(req, res) {
-    res.type('text/plain');
-    res.status(200).send('Serving Booq');
+    const context = {
+        title: 'Home | Booq Dane\'s Beautiful Bed and Breakfast and Breakdancing Camp'
+    };
+    res.type('text/html');
+    res.status(200).render('home', context);
+});
+
+app.get('/rooms', function(req, res) {
+    const context = {
+        title: 'Tha Rooms | Booq Dane\'s Beautiful Bed and Breakfast and Breakdancing Camp'
+    };
+    res.type('text/html');
+    res.status(200).render('rooms', context);
+});
+
+app.get('/food', function(req, res) {
+    const context = {
+        title: 'Tha Food | Booq Dane\'s Beautiful Bed and Breakfast and Breakdancing Camp'
+    };
+    res.type('text/html');
+    res.status(200).render('food', context);
+});
+
+app.get('/fun', function(req, res) {
+    const context = {
+        title: 'Tha Fun | Booq Dane\'s Beautiful Bed and Breakfast and Breakdancing Camp'
+    };
+    res.type('text/html');
+    res.status(200).render('fun', context);
+});
+
+app.get('/contact', function(req, res) {
+    const context = {
+        title: 'Contact | Booq Dane\'s Beautiful Bed and Breakfast and Breakdancing Camp'
+    };
+    res.type('text/html');
+    res.status(200).render('contact', context);
 });
 
 app.use(function(req, res) {
