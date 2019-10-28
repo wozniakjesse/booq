@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const handlebars = require('express-handlebars').create({defaultLayout: 'main'});
 const bodyParser = require('body-parser');
+const db = require('./lib/connection');
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
@@ -13,6 +14,18 @@ app.use(bodyParser.json());
 // serve files in the assets folder
 app.use('/assets', express.static(__dirname + '/assets'));
 
+/*
+app.get('/test', function(req, res) {
+    // this is an example of database use
+    db.query('INSERT INTO cats (name, vibe) VALUE ("ricky", "good")', function(error, results, fields) {
+        if (error)
+            res.status(400).send(error);
+            
+        res.type('text/plain');
+        res.status(200).send({results: results, fields: fields});
+    });
+});
+*/
 
 app.get('/', function(req, res) {
     const context = {
