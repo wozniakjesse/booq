@@ -99,7 +99,19 @@ app.post('/login', passport.authenticate('local', { successRedirect: '/',
 app.get('/login-test', auth.loggedIn, function(req, res) {
     res.type('text/plain');
     res.status(200).send('Congrats! You can only see this if you\'re logged in');
-})
+});
+
+app.get('/hasher', function(req, res) {
+    if (!req.query.hasOwnProperty('string')) {
+        res.type('text/plain');
+        res.status(200).send('Add a query parameter of "?string=ABC" where ABC is the password you want a hash for');
+    } else {
+        bcrypt.hash(req.query.string, 10, function(err, hash) {
+            res.type('text/plain');
+            res.status(200).send('Your hash is: '+hash);
+        });    
+    }
+});
 
 app.use(function(req, res) {
     res.type('text/plain');
