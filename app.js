@@ -113,6 +113,163 @@ app.get('/hasher', function(req, res) {
     }
 });
 
+
+
+// GUEST ACCOUNT
+app.get('/guest-account', function(req, res) {
+    const context = {
+        title: strings.getPageTitle('Guest Account')
+    }
+    res.type('text/html');
+    res.status(200).render('guest-account',  context);
+});
+
+app.post('/guest-account',  function(req, res) {
+    
+    var parameters = [];
+    bcrypt.hash(req.body['password'], 10, function(err, hash) {
+    
+    parameters.push(req.body['email']);
+    parameters.push(hash);
+    parameters.push(req.body['first_name']);
+    parameters.push(req.body['last_name']);
+    parameters.push(req.body['vibe']);
+    console.log(parameters);
+    
+
+    db.query("INSERT INTO users (`email`, `password`, `first_name`, `last_name`, `vibe`)" 
+    + "VALUES (?,?,?,?,?)", 
+    parameters, function(err, result, fields){
+        if(err) 
+            {throw err;}
+    })
+    res.redirect('/');
+    })
+})
+
+
+//GUEST BOOKING
+app.get('/guest-booking', auth.loggedIn, function(req, res) {
+    const context = {
+        title: strings.getPageTitle('Guest Booking')
+    }
+    res.type('text/html');
+    res.status(200).render('guest-booking',  context);
+});
+
+app.post('/guest-booking', auth.loggedIn, function(req, res, next){
+    
+    var parameters = [];
+    parameters.push(req.body['user_id']);
+    parameters.push(req.body['room_id']);
+    parameters.push(req.body['cat_id']);
+    parameters.push(req.body['date_in']);
+    parameters.push(req.body['date_out']);
+    parameters.push(req.body['hot_dogs']);
+    parameters.push(req.body['pancakes']);
+    console.log(parameters);
+
+    db.query("INSERT INTO bookings (`user_id`, `room_id`, `cat_id`, `date_in`, `date_out`, `hot_dogs`, `pancakes`)"
+     + "VALUES (?,?,?,?,?,?,?)", 
+    parameters, function(err, result, fields){
+        if(err) 
+            {throw err;}
+    })
+    res.redirect('/');
+    
+})
+
+//GUEST OVERVIEW
+//rooms
+app.get('/guest-rooms-browse', auth.loggedIn, function(req,res,next){
+    res.render('guest-rooms-browse');
+})
+
+app.get('/guest-rooms-all', auth.loggedIn, function(req,res,next){
+    db.query('SELECT '
+            +'id as room_id, '
+            +'name as room_name, '
+            +'description as room_description '
+            +'FROM rooms; ', (error, results, fields) =>{
+    
+    res.render('guest-rooms-all', {data: results});
+        })
+    })
+
+app.get('/guest-rooms-search', auth.loggedIn, function(req,res,next){
+    db.query('SELECT '
+            +'id as room_id, '
+            +'name as room_name, '
+            +'description as room_description '
+            +'FROM rooms '
+            +'WHERE description LIKE \'%' + req.query['userinput'] + '%\'', (error, results, fields) =>{
+    
+    res.render('guest-rooms-search', {data: results});
+        })
+})
+
+//classes
+app.get('/guest-classes-browse', auth.loggedIn, function(req,res,next){
+    res.render('guest-classes-browse');
+})
+
+app.get('/guest-classes-all', auth.loggedIn, function(req,res,next){
+    db.query('SELECT '
+            +'id as class_id, '
+            +'name as class_name, '
+            +'description as class_description '
+            +'FROM dance_classes; ', (error, results, fields) =>{
+    
+    res.render('guest-classes-all', {data: results});
+        })
+    })
+
+app.get('/guest-classes-search', auth.loggedIn, function(req,res,next){
+    db.query('SELECT '
+            +'id as class_id, '
+            +'name as class_name, '
+            +'description as class_description '
+            +'FROM dance_classes '
+            +'WHERE description LIKE \'%' + req.query['userinput'] + '%\'', (error, results, fields) =>{
+    
+    res.render('guest-classes-search', {data: results});
+        })
+})
+
+//cats
+app.get('/guest-cats-browse', auth.loggedIn, function(req,res,next){
+    res.render('guest-cats-browse');
+})
+
+app.get('/guest-cats-all', auth.loggedIn, function(req,res,next){
+    db.query('SELECT '
+            +'id as cat_id, '
+            +'name as cat_name, '
+            +'vibe as cat_vibe '
+            +'FROM cats; ', (error, results, fields) =>{
+    
+    res.render('guest-cats-all', {data: results});
+        })
+    })
+
+app.get('/guest-cats-search', auth.loggedIn, function(req,res,next){
+    db.query('SELECT '
+            +'id as cat_id, '
+            +'name as cat_name, '
+            +'vibe as cat_vibe '
+            +'FROM cats '
+            +'WHERE vibe LIKE \'%' + req.query['userinput'] + '%\'', (error, results, fields) =>{
+    
+    res.render('guest-cats-search', {data: results});
+        })
+})
+
+
+
+
+
+
+
 app.use(function(req, res) {
     res.type('text/plain');
     res.status(404).send('404 not found');
