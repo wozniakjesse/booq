@@ -1,0 +1,25 @@
+{{> header}}
+    <main>
+        <h2>ROOMS</h2>
+
+	   	<form class = "container" action="/guest-rooms-all" method = "GET"> SHOW ALL ROOMS:
+  		<br>
+  			<input type="submit" value="SHOW ALL">
+  		<br> 
+  		</form>
+
+		  <P><P>
+  			
+		<P><P>
+
+	   <form for = "userinput" class = "container" action="/guest-rooms-search" method = "GET">SEARCH FOR A SPECIFIC VIBE:
+	   	<br>
+  			<input type="text" name="userinput" >
+  		<br>
+  		<br>
+  			<input type="submit" value="SEARCH">
+  		<br>
+		</form>
+
+            </main>
+{{> footer}}

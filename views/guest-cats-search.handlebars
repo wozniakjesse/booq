@@ -1,0 +1,37 @@
+  {{> header}}
+    <main>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h1>Cats - Search Results</h1>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+        {{#each data}}
+            <tr>
+                <td>{{this.cat_id}}</td>
+                <td>{{this.cat_name}}</td>
+                <td>{{this.cat_vibe}}</td>
+            </tr>
+        {{/each}}
+                                </tr>
+                            </tbody>
+                        </table>     
+                    </div>
+                </div>
+            </div>
+        </main>
+        <script type="text/javascript" src="assets/js/scripts.js"></script>
+    </body>
+</html>
+
+
+
+    </main>
+{{> footer}}

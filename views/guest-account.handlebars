@@ -1,0 +1,45 @@
+{{> header}}
+<main>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <form class="" action="/guest-account" method="POST">
+                        
+                        <div class="form-group">
+                            <label for="email">Email<br>
+                                <input type="email" class="form-control" name="email" placeholder="Email address"><br>
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password<br>
+                                <input type="password" class="form-control" name="password" placeholder="Password"><br>
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="first_name">First Name<br>
+                                <input type="text" class="form-control" name="first_name" placeholder="First Name"><br>
+                            </label>
+                        </div>
+                                
+                        <div class="form-group">
+                            <label for="last_name">Last Name<br>
+                                <input type="text" class="form-control" name="last_name" placeholder="Last Name"><br>
+                            </label>
+                        </div>
+                                
+                        <div class="form-group">
+                            <label for="vibe">Vibe<br>
+                                <input type="text" class="form-control" name="vibe" placeholder="Vibe"><br>
+                            </label>
+                        </div>
+                        <input type="submit" class="btn btn-primary" value="Login">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{{> footer}}
