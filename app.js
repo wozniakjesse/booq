@@ -238,7 +238,7 @@ app.get('/guest-cats-search', auth.loggedIn, function(req,res,next){
         })
 })
 
-app.get('/admin/cats', function(req, res) {
+app.get('/admin/cats', auth.loggedIn, function(req, res) {
     Cats.getAll().then(function(cats) {
         const context = {
             cats: cats,
@@ -251,14 +251,14 @@ app.get('/admin/cats', function(req, res) {
     });
 });
 
-app.get('/admin/cats/add', function(req, res) {
+app.get('/admin/cats/add', auth.loggedIn, function(req, res) {
     const context = {
         title: strings.getPageTitle('Add Cat')
     }
     res.status(200).render('admin/addcat', context);
 });
 
-app.post('/admin/cats/add', function(req, res) {
+app.post('/admin/cats/add', auth.loggedIn, function(req, res) {
     if (!req.body.name) {
         res.type('text/plain');
         res.status(400).send('Error: a cat must have a name property');
@@ -273,7 +273,7 @@ app.post('/admin/cats/add', function(req, res) {
     }
 });
 
-app.get('/admin/cats/delete/:id', function(req, res) {
+app.get('/admin/cats/delete/:id', auth.loggedIn, function(req, res) {
     if (!req.params.id) {
         res.type('text/plain');
         res.status(400).send('Error: missing cat id');
@@ -288,7 +288,7 @@ app.get('/admin/cats/delete/:id', function(req, res) {
     }
 });
 
-app.get('/admin/cats/edit/:id', function(req, res) {
+app.get('/admin/cats/edit/:id', auth.loggedIn, function(req, res) {
     if (!req.params.id) {
         res.type('text/plain');
         res.status(400).send('Error: missing cat id');
@@ -309,7 +309,7 @@ app.get('/admin/cats/edit/:id', function(req, res) {
     }
 });
 
-app.post('/admin/cats/edit/:id', function(req, res) {
+app.post('/admin/cats/edit/:id', auth.loggedIn, function(req, res) {
     if (!req.params.id || !req.body.name) {
         res.type('text/plain');
         res.status(400).send('Error: a cat must have id and name properties');
