@@ -10,6 +10,7 @@ const bcrypt = require('bcrypt');
 const db = require('./lib/connection');
 const auth = require('./lib/auth')(passport, Strategy, bcrypt, db);
 const strings = require('./lib/strings');
+const Cats = require('./services/CatService')(db);
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
@@ -30,19 +31,6 @@ app.use(passport.session());
 
 // serve files in the assets folder
 app.use('/assets', express.static(__dirname + '/assets'));
-
-/*
-app.get('/test', function(req, res) {
-    // this is an example of database use
-    db.query('INSERT INTO cats (name, vibe) VALUE ("ricky", "good")', function(error, results, fields) {
-        if (error)
-            res.status(400).send(error);
-            
-        res.type('text/plain');
-        res.status(200).send({results: results, fields: fields});
-    });
-});
-*/
 
 app.get('/', function(req, res) {
     const context = {
@@ -100,20 +88,6 @@ app.get('/login-test', auth.loggedIn, function(req, res) {
     res.type('text/plain');
     res.status(200).send('Congrats! You can only see this if you\'re logged in');
 });
-
-app.get('/hasher', function(req, res) {
-    if (!req.query.hasOwnProperty('string')) {
-        res.type('text/plain');
-        res.status(200).send('Add a query parameter of "?string=ABC" where ABC is the password you want a hash for');
-    } else {
-        bcrypt.hash(req.query.string, 10, function(err, hash) {
-            res.type('text/plain');
-            res.status(200).send('Your hash is: '+hash);
-        });    
-    }
-});
-
-
 
 // GUEST ACCOUNT
 app.get('/guest-account', function(req, res) {
@@ -264,11 +238,96 @@ app.get('/guest-cats-search', auth.loggedIn, function(req,res,next){
         })
 })
 
+app.get('/admin/cats', function(req, res) {
+    Cats.getAll().then(function(cats) {
+        const context = {
+            cats: cats,
+            title: strings.getPageTitle('Cats')
+        };
+        res.status(200).render('admin/cats', context);
+    }).catch(function(err) {
+        res.type('text/plain');
+        res.status(400).send(err);
+    });
+});
 
+app.get('/admin/cats/add', function(req, res) {
+    const context = {
+        title: strings.getPageTitle('Add Cat')
+    }
+    res.status(200).render('admin/addcat', context);
+});
 
+app.post('/admin/cats/add', function(req, res) {
+    if (!req.body.name) {
+        res.type('text/plain');
+        res.status(400).send('Error: a cat must have a name property');
+    } else {
+        delete req.body.submit;
+        Cats.add(req.body).then(function(results) {
+            res.redirect('/admin/cats');
+        }).catch(function(err) {
+            res.type('text/plain');
+            res.status(400).send(err);
+        });
+    }
+});
 
+app.get('/admin/cats/delete/:id', function(req, res) {
+    if (!req.params.id) {
+        res.type('text/plain');
+        res.status(400).send('Error: missing cat id');
+    } else {
+        const id = parseInt(req.params.id);
+        Cats.remove(id).then(function(results) {
+            res.redirect('/admin/cats');
+        }).catch(function(err) {
+            res.type('text/plain');
+            res.status(400).send(err);
+        });
+    }
+});
 
+app.get('/admin/cats/edit/:id', function(req, res) {
+    if (!req.params.id) {
+        res.type('text/plain');
+        res.status(400).send('Error: missing cat id');
+    } else {
+        const id = parseInt(req.params.id);
+        Cats.get(id).then(function(cat) {
+            const context = {
+                id: cat.id,
+                name: cat.name,
+                vibe: cat.vibe,
+                title: strings.getPageTitle('Cats')
+            };
+            res.status(200).render('admin/editcat', context);
+        }).catch(function(err) {
+            res.type('text/plain');
+            res.status(400).send(err);
+        });
+    }
+});
 
+app.post('/admin/cats/edit/:id', function(req, res) {
+    if (!req.params.id || !req.body.name) {
+        res.type('text/plain');
+        res.status(400).send('Error: a cat must have id and name properties');
+    } else {
+        delete req.body.submit;
+        const cat = {
+            id: parseInt(req.params.id),
+            name: req.body.name,
+            vibe: req.body.vibe
+        }
+        Cats.edit(cat).then(function(results) {
+            res.redirect('/admin/cats');
+        }).catch(function(err) {
+            res.type('text/plain');
+            res.status(400).send(err);
+        });
+    }
+});
 
 app.use(function(req, res) {
     res.type('text/plain');
