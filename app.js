@@ -12,9 +12,14 @@ const auth = require('./lib/auth')(passport, Strategy, bcrypt, db);
 const strings = require('./lib/strings');
 const Cats = require('./services/CatService')(db);
 
+
+
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 app.set('port', 8652);
+app.set('db', db);
+app.set('bcrypt', bcrypt);
+app.set('auth', auth)
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -31,6 +36,7 @@ app.use(passport.session());
 
 // serve files in the assets folder
 app.use('/assets', express.static(__dirname + '/assets'));
+
 
 app.get('/', function(req, res) {
     const context = {
@@ -81,7 +87,7 @@ app.get('/login', function(req, res) {
 });
 
 app.post('/login', passport.authenticate('local', { successRedirect: '/',
-													failureRedirect: '/login',
+													failureRedirect: '/guest/guest-account',
 													failureFlash: false }));
                                                     
 app.get('/login-test', auth.loggedIn, function(req, res) {
@@ -89,16 +95,20 @@ app.get('/login-test', auth.loggedIn, function(req, res) {
     res.status(200).send('Congrats! You can only see this if you\'re logged in');
 });
 
+
+
+
 // GUEST ACCOUNT
-app.get('/guest-account', function(req, res) {
+app.get('/guest/guest-account', function(req, res) {
     const context = {
         title: strings.getPageTitle('Guest Account')
     }
     res.type('text/html');
-    res.status(200).render('guest-account',  context);
+    res.status(200).render('guest/guest-account',  context);
+
 });
 
-app.post('/guest-account',  function(req, res) {
+app.post('/guest/guest-account', function(req, res) {
     
     var parameters = [];
     bcrypt.hash(req.body['password'], 10, function(err, hash) {
@@ -123,54 +133,61 @@ app.post('/guest-account',  function(req, res) {
 
 
 //GUEST BOOKING
-app.get('/guest-booking', auth.loggedIn, function(req, res) {
-    const context = {
-        title: strings.getPageTitle('Guest Booking')
+//app.use('/guest/guest-booking', require('./services/BookingService'));
+const BookingService = require('./services/BookingService');
+
+app.get('/guest/guest-booking', auth.loggedIn, function(req, res){
+    console.log(req.user)
+    var callbackCount = 0;
+    var context = {};
+    var db = req.app.get('db');
+    BookingService.getRooms(res, db, context, complete);
+    BookingService.getCats(res, db, context, complete);
+    BookingService.getClasses(res, db, context, complete)
+    function complete(){
+        callbackCount++;
+        if(callbackCount >= 3){
+            res.render('guest/guest-booking', context);
+        }
+    
     }
-    res.type('text/html');
-    res.status(200).render('guest-booking',  context);
 });
 
-app.post('/guest-booking', auth.loggedIn, function(req, res, next){
-    
-    var parameters = [];
-    parameters.push(req.body['user_id']);
-    parameters.push(req.body['room_id']);
-    parameters.push(req.body['cat_id']);
-    parameters.push(req.body['date_in']);
-    parameters.push(req.body['date_out']);
-    parameters.push(req.body['hot_dogs']);
-    parameters.push(req.body['pancakes']);
-    console.log(parameters);
 
-    db.query("INSERT INTO bookings (`user_id`, `room_id`, `cat_id`, `date_in`, `date_out`, `hot_dogs`, `pancakes`)"
-     + "VALUES (?,?,?,?,?,?,?)", 
-    parameters, function(err, result, fields){
-        if(err) 
-            {throw err;}
-    })
-    res.redirect('/');
-    
+app.post('/guest/guest-booking', auth.loggedIn, function(req, res){
+    var db = req.app.get('db');
+    context ={}
+    callbackCount = 0;
+    BookingService.insertBooking(res, req, db, complete)
+    function complete(){
+        callbackCount++;
+        if(callbackCount >= 1){
+            console.log(req.body);
+
+        }
+    }
 })
+
+
 
 //GUEST OVERVIEW
 //rooms
-app.get('/guest-rooms-browse', auth.loggedIn, function(req,res,next){
-    res.render('guest-rooms-browse');
+app.get('/guest/guest-rooms-browse', function(req,res,next){
+    res.render('guest/guest-rooms-browse');
 })
 
-app.get('/guest-rooms-all', auth.loggedIn, function(req,res,next){
+app.get('/guest/guest-rooms-all', function(req,res,next){
     db.query('SELECT '
             +'id as room_id, '
             +'name as room_name, '
             +'description as room_description '
             +'FROM rooms; ', (error, results, fields) =>{
     
-    res.render('guest-rooms-all', {data: results});
+    res.render('guest/guest-rooms-all', {data: results});
         })
     })
 
-app.get('/guest-rooms-search', auth.loggedIn, function(req,res,next){
+app.get('/guest/guest-rooms-search', function(req,res,next){
     db.query('SELECT '
             +'id as room_id, '
             +'name as room_name, '
@@ -178,27 +195,27 @@ app.get('/guest-rooms-search', auth.loggedIn, function(req,res,next){
             +'FROM rooms '
             +'WHERE description LIKE \'%' + req.query['userinput'] + '%\'', (error, results, fields) =>{
     
-    res.render('guest-rooms-search', {data: results});
+    res.render('guest/guest-rooms-search', {data: results});
         })
 })
 
 //classes
-app.get('/guest-classes-browse', auth.loggedIn, function(req,res,next){
-    res.render('guest-classes-browse');
+app.get('/guest/guest-classes-browse', function(req,res,next){
+    res.render('guest/guest-classes-browse');
 })
 
-app.get('/guest-classes-all', auth.loggedIn, function(req,res,next){
+app.get('/guest/guest-classes-all', function(req,res,next){
     db.query('SELECT '
             +'id as class_id, '
             +'name as class_name, '
             +'description as class_description '
             +'FROM dance_classes; ', (error, results, fields) =>{
     
-    res.render('guest-classes-all', {data: results});
+    res.render('guest/guest-classes-all', {data: results});
         })
     })
 
-app.get('/guest-classes-search', auth.loggedIn, function(req,res,next){
+app.get('/guest/guest-classes-search', function(req,res,next){
     db.query('SELECT '
             +'id as class_id, '
             +'name as class_name, '
@@ -206,27 +223,27 @@ app.get('/guest-classes-search', auth.loggedIn, function(req,res,next){
             +'FROM dance_classes '
             +'WHERE description LIKE \'%' + req.query['userinput'] + '%\'', (error, results, fields) =>{
     
-    res.render('guest-classes-search', {data: results});
+    res.render('guest/guest-classes-search', {data: results});
         })
 })
 
 //cats
-app.get('/guest-cats-browse', auth.loggedIn, function(req,res,next){
-    res.render('guest-cats-browse');
+app.get('/guest/guest-cats-browse',  function(req,res,next){
+    res.render('guest/guest-cats-browse');
 })
 
-app.get('/guest-cats-all', auth.loggedIn, function(req,res,next){
+app.get('/guest/guest-cats-all', function(req,res,next){
     db.query('SELECT '
             +'id as cat_id, '
             +'name as cat_name, '
             +'vibe as cat_vibe '
             +'FROM cats; ', (error, results, fields) =>{
     
-    res.render('guest-cats-all', {data: results});
+    res.render('guest/guest-cats-all', {data: results});
         })
     })
 
-app.get('/guest-cats-search', auth.loggedIn, function(req,res,next){
+app.get('/guest/guest-cats-search', function(req,res,next){
     db.query('SELECT '
             +'id as cat_id, '
             +'name as cat_name, '
@@ -234,10 +251,12 @@ app.get('/guest-cats-search', auth.loggedIn, function(req,res,next){
             +'FROM cats '
             +'WHERE vibe LIKE \'%' + req.query['userinput'] + '%\'', (error, results, fields) =>{
     
-    res.render('guest-cats-search', {data: results});
+    res.render('guest/guest-cats-search', {data: results});
         })
 })
 
+
+//ADMIN
 app.get('/admin/cats', auth.loggedIn, function(req, res) {
     Cats.getAll().then(function(cats) {
         const context = {
