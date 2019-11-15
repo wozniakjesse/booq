@@ -1,9 +1,10 @@
-{{> header}}
+{{> guest-header}}
 <main>
     <div class="section">
         <div class="container">
             <div class="row">
                 <div class="col-12">
+                    <h1>YA GOTTA LOG IN FO DAT</h1>
                     <form class="" action="/login" method="POST">
                         <div class="form-group">
                             <label for="email">Email<br>
@@ -16,6 +17,7 @@
                             </label>
                         </div>
                         <input type="submit" class="btn btn-primary" value="Login">
+                        <input class="btn btn-primary" onclick="window.location.href = 'guest/guest-account';" value="Click Here To Make Your Account"</button>
                     </form>
                 </div>
             </div>
