@@ -201,6 +201,9 @@ li:before {
 	color: green;
 	font-size: 1.4em;
 }
+li.nav-item:before {
+	content: ''
+}
 li.flash:before {
 	display: none;
 }
@@ -240,6 +243,9 @@ li.flash:before {
 #main-navigation a:hover {
     color: red;
 	border-bottom: 2px solid red;
+}
+.admin-navbar li {
+	margin-bottom: 0px;
 }
 
 /*

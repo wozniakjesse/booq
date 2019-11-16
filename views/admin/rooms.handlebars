@@ -5,31 +5,31 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h1>Cats - View All</h1>
+                    <h1>Rooms - View All</h1>
                     <table class="table">
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
-                                <th>Vibe</th>
+                                <th>Description</th>
                                 <th>Edit / Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{#each cats}}
+                            {{#each rooms}}
                                 <tr>
                                     <td>{{id}}</td>
                                     <td>{{name}}</td>
-                                    <td>{{vibe}}</td>
+                                    <td>{{description}}</td>
                                     <td>
-                                        <a class="btn btn-primary" href="/admin/cats/edit/{{id}}">Edit</a>
-                                        <a class="btn btn-danger delete-button" href="/admin/cats/delete/{{id}}">Delete</a>
+                                        <a class="btn btn-primary" href="/admin/rooms/edit/{{id}}">Edit</a>
+                                        <a class="btn btn-danger delete-button" href="/admin/rooms/delete/{{id}}">Delete</a>
                                     </td>
                                 </tr>
                             {{/each}}
                         </tbody>
                     </table>
-                    <p><a class="btn btn-primary" href="/admin/cats/add">Add Cat</a></p>        
+                    <p><a class="btn btn-primary" href="/admin/rooms/add">Add Room</a></p>        
                 </div>
             </div>
         </div>
