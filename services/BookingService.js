@@ -38,7 +38,7 @@ module.exports = function(db, moment) {
 
 
     function insertBooking(res, req, db, complete){
-        
+        const classId = parseInt(req.body.class_id);
         var sql = "INSERT INTO bookings (room_id, cat_id, date_in, date_out, "
             + "hot_dogs, pancakes, user_id) VALUES (?,?,?,?,?,?,?) "
         var inserts = [req.body.room_id, req.body.cat_id, req.body.date_in, 
@@ -48,9 +48,17 @@ module.exports = function(db, moment) {
                 res.write(JSON.stringify(error));
                 res.end();
             }else{
-                res.redirect('/');
+                const bookingId = results.insertId;
+                sql = "INSERT INTO class_bookings (booking_id, class_id) VALUES (?, ?);";
+                db.query(sql, [bookingId, classId], function(error, results, fields) {
+                    if(error){
+                        res.write(JSON.stringify(error));
+                        res.end();
+                    } else {
+                        res.redirect('/');
+                    }
+                });
             }
-            console.log(inserts)
             complete();
         })
     }
