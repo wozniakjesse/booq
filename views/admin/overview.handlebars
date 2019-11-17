@@ -5,12 +5,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h1>Admin Overview</h1>
-                    <h2>Users</h2>
+                    <h1 class="header-bar">Admin Overview</h1>
+                    <h2 class="header-bar">Users</h2>
                     <p><a href="/admin/userlist">User List</a></p>
-                    <h2>Bookings for {{start}} - {{end}}</h2>
+                    <h2 class="header-bar">Bookings for {{start}} - {{end}}</h2>
                     {{#each bookings}}
-                        <h3>{{date}}</h3>
+                        <h3 class="header-bar">{{date}}</h3>
                         <table class="table">
                             <thead>
                                 <tr>

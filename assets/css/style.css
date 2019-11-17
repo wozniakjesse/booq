@@ -267,6 +267,22 @@ li.flash:before {
 }
 
 /*
+*	Header Bars
+*/
+.header-bar {
+	padding: 10px 20px;
+}
+h1.header-bar {
+	background-color: red;
+}
+h2.header-bar {
+	background-color: #42f2f5;
+}
+h3.header-bar {
+	background-color: #e6e6e6;
+}
+
+/*
 *	Homepage
 */
 .center-vid {
