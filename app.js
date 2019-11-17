@@ -7,12 +7,14 @@ const session = require('express-session');
 const passport = require('passport');
 const Strategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
+const moment = require('moment');
 const db = require('./lib/connection');
 const auth = require('./lib/auth')(passport, Strategy, bcrypt, db);
 const strings = require('./lib/strings');
 const Cats = require('./services/CatService')(db);
 const Rooms = require('./services/RoomService')(db);
 const Classes = require('./services/DanceClassService')(db);
+const BookingService = require('./services/BookingService')(db, moment);
 
 
 
@@ -135,9 +137,6 @@ app.post('/guest/guest-account', function(req, res) {
 
 
 //GUEST BOOKING
-//app.use('/guest/guest-booking', require('./services/BookingService'));
-const BookingService = require('./services/BookingService');
-
 app.get('/guest/guest-booking', auth.loggedIn, function(req, res){
     console.log(req.user)
     var callbackCount = 0;
@@ -566,6 +565,29 @@ app.get('/admin/classes/delete/:id', auth.loggedIn, function(req, res) {
             res.status(400).send(err);
         });
     }
+});
+
+/*
+*   Admin Overview
+*/
+app.get('/admin', function(req, res) {
+    res.redirect('/admin/overview');
+});
+app.get('/admin/overview', function(req, res) {
+    const start = moment().startOf('week');
+    const end = moment().endOf('week');
+    BookingService.getWeeklyBookings(start, end).then(function(bookings) {
+        const context = {
+            title: strings.getPageTitle('Admin Overview'),
+            bookings: bookings,
+            start: start.format('MMMM D'),
+            end: end.format('MMMM D')
+        };
+        res.status(200).render('admin/overview', context);
+    }).catch(function(err) {
+        res.type('text/plain');
+        res.status(400).send(err);
+    });
 });
 
 

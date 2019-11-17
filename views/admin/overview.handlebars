@@ -1,0 +1,42 @@
+{{> guest-header}}
+{{> admin-header}}
+<main>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Admin Overview</h1>
+                    <h2>Users</h2>
+                    <p><a href="/admin/userlist">User List</a></p>
+                    <h2>Bookings for {{start}} - {{end}}</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Dates</th>
+                                <th>Guest</th>
+                                <th>Room</th>
+                                <th>Cat</th>
+                                <th>Hot Dogs</th>
+                                <th>Pancakes</th>
+                                <th>Dance Classes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each bookings}}
+                                <tr>
+                                    <td>{{date_in}} to {{date_out}}</td>
+                                    <td>{{first_name}} {{last_name}}</td>
+                                    <td>{{room}}</td>
+                                    <td>{{cat_name}}</td>
+                                    <td>{{hot_dogs}}</td>
+                                    <td>{{pancakes}}</td>
+                                    <td>{{classes}}</td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>         
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
