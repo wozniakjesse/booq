@@ -227,6 +227,10 @@ li.flash:before {
 .header-home-link a:hover {
     color: black;
 }
+#main-navigation {
+	background-color: black;
+	margin-bottom: 0px;
+}
 #main-navigation ul {
     background-color: black;
 	padding: 0px;
@@ -243,6 +247,17 @@ li.flash:before {
 #main-navigation a:hover {
     color: red;
 	border-bottom: 2px solid red;
+}
+#main-navigation a.header-admin-button {
+	background-color: yellow;
+    color: #000;
+    font-size: 16px;
+    padding: 10px 20px;
+    position: absolute;
+    right: 0px;
+    text-transform: uppercase;
+    top: 14px;
+    z-index: 10;
 }
 .admin-navbar li {
 	margin-bottom: 0px;
