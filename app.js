@@ -15,6 +15,7 @@ const Cats = require('./services/CatService')(db);
 const Rooms = require('./services/RoomService')(db);
 const Classes = require('./services/DanceClassService')(db);
 const BookingService = require('./services/BookingService')(db, moment);
+const Users = require('./services/UserService')(db);
 
 
 
@@ -570,10 +571,10 @@ app.get('/admin/classes/delete/:id', auth.loggedIn, function(req, res) {
 /*
 *   Admin Overview
 */
-app.get('/admin', function(req, res) {
+app.get('/admin', auth.loggedIn, function(req, res) {
     res.redirect('/admin/overview');
 });
-app.get('/admin/overview', function(req, res) {
+app.get('/admin/overview', auth.loggedIn, function(req, res) {
     const start = moment().startOf('week');
     const end = moment().endOf('week');
     BookingService.getWeeklyBookings(start, end).then(function(bookings) {
@@ -584,6 +585,22 @@ app.get('/admin/overview', function(req, res) {
             end: end.format('MMMM D')
         };
         res.status(200).render('admin/overview', context);
+    }).catch(function(err) {
+        res.type('text/plain');
+        res.status(400).send(err);
+    });
+});
+
+/*
+*   Admin User List
+*/
+app.get('/admin/userlist', auth.loggedIn, function(req, res) {
+    Users.getAll().then(function(users) {
+        const context = {
+            title: strings.getPageTitle('Admin User List'),
+            users: users
+        };
+        res.status(200).render('admin/users', context);
     }).catch(function(err) {
         res.type('text/plain');
         res.status(400).send(err);

@@ -1,0 +1,35 @@
+{{> guest-header}}
+{{> admin-header}}
+<main>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Users - View All</h1>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Email</th>
+                                <th>Last Name</th>
+                                <th>First Name</th>
+                                <th>Vibe</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each users}}
+                                <tr>
+                                    <td>{{id}}</td>
+                                    <td>{{email}}</td>
+                                    <td>{{last_name}}</td>
+                                    <td>{{first_name}}</td>
+                                    <td>{{vibe}}</td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>        
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
