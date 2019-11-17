@@ -1,89 +1,81 @@
 {{> guest-header}}
-    <head>
-        <meta charset="utf-8">
-        <title>Guest Booking</title>
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/css/style.css">
-    </head>
-    <body>
-
-  
 
 <main>
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h1>BOOK YOUR STAY</h1>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="header-bar">BOOK YOUR STAY</h1>
 
-                <form class = "container" action="guest-booking" method = post>
-                    
-          
+                    <form class = "container" action="guest-booking" method = post>
+                        
+              
 
-                    <div class="form-group">
-                        <label for="room_id"><b>ROOM</b></label>
-                        <select class="form-control col-12 col-md-6" name="room_id" required>
-                            {{#each rooms}}
-                             <option value="{{id}}"> 
-                                 <td>{{name}}</td>
-                                </option>
-                            {{/each}}
-                        </select>
-                        <br>
-                    </div>
+                        <div class="form-group">
+                            <label for="room_id"><b>ROOM</b></label>
+                            <select class="form-control col-12 col-md-6" name="room_id" required>
+                                {{#each rooms}}
+                                 <option value="{{id}}"> 
+                                     <td>{{name}}</td>
+                                    </option>
+                                {{/each}}
+                            </select>
+                            <br>
+                        </div>
 
 
-                    <div class="form-group">
-                        <label for="cat_id"><b>CAT</b></label>
-                        <select class="form-control col-12 col-md-6" name="cat_id" required>
-                            {{#each cats}}
-                             <option value="{{id}}"> 
-                                 <td>{{name}}</td>
-                                </option>
-                            {{/each}}
-                        </select>
-                        <br>
-                    </div>
+                        <div class="form-group">
+                            <label for="cat_id"><b>CAT</b></label>
+                            <select class="form-control col-12 col-md-6" name="cat_id" required>
+                                {{#each cats}}
+                                 <option value="{{id}}"> 
+                                     <td>{{name}}</td>
+                                    </option>
+                                {{/each}}
+                            </select>
+                            <br>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="class_id"><b>DANCE CLASSES</b></label>
-                        <select class="form-control col-12 col-md-6" name="class_id" required>
-                            {{#each classes}}
-                             <option value="{{id}}"> 
-                                 <td>{{name}}</td>
-                                </option>
-                            {{/each}}
-                        </select>
-                        <br>
-                    </div>
+                        <div class="form-group">
+                            <label for="class_id"><b>DANCE CLASSES</b></label>
+                            <select class="form-control col-12 col-md-6" name="class_id" required>
+                                {{#each classes}}
+                                 <option value="{{id}}"> 
+                                     <td>{{name}}</td>
+                                    </option>
+                                {{/each}}
+                            </select>
+                            <br>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="date_in"><b>DATE IN</b></label>
-                        <input class="form-control col-12 col-md-6" type="date" placeholder="DATE IN" name="date_in" required>
-                        <br>
-                    </div>
-                    <div class="form-group">
-                        <label for="date_out"><b>DATE OUT</b></label>
-                        <input class="form-control col-12 col-md-6" type="date" placeholder="DATE OUT" name="date_out" required>
-                        <br>
-                    </div>
-                    <div class="form-group">
-                        <label for="hot_dogs"><b>HOTDOGS</b></label>
-                        <input class="form-control col-12 col-md-6" type="number" placeholder="HOW MANY HOTDOGS" name="hot_dogs" min="0" required>
-                        <br>
-                    </div>
-                    <div class="form-group">
-                        <label for="pancakes"><b>PANCAKES</b></label>
-                        <input class="form-control col-12 col-md-6" type="number" placeholder="HOW MANY PANCAKES" name="pancakes" min="0" required>
-                    </div>
+                        <div class="form-group">
+                            <label for="date_in"><b>DATE IN</b></label>
+                            <input class="form-control col-12 col-md-6" type="date" placeholder="DATE IN" name="date_in" required>
+                            <br>
+                        </div>
+                        <div class="form-group">
+                            <label for="date_out"><b>DATE OUT</b></label>
+                            <input class="form-control col-12 col-md-6" type="date" placeholder="DATE OUT" name="date_out" required>
+                            <br>
+                        </div>
+                        <div class="form-group">
+                            <label for="hot_dogs"><b>HOTDOGS</b></label>
+                            <input class="form-control col-12 col-md-6" type="number" placeholder="HOW MANY HOTDOGS" name="hot_dogs" min="0" required>
+                            <br>
+                        </div>
+                        <div class="form-group">
+                            <label for="pancakes"><b>PANCAKES</b></label>
+                            <input class="form-control col-12 col-md-6" type="number" placeholder="HOW MANY PANCAKES" name="pancakes" min="0" required>
+                        </div>
 
-                    <div>
-                      <button class="btn btn-danger" type="button"> Cancel </button>
-                      <button class="btn btn-primary" type="submit"> BOOK MY STAY </button>
-                    </div>
-                </form>        
+                        <div>
+                          <button class="btn btn-danger" type="button"> Cancel </button>
+                          <button class="btn btn-primary" type="submit"> BOOK MY STAY </button>
+                        </div>
+                    </form>        
+                </div>
             </div>
         </div>
     </div>
 </main>
-</body>
 {{> footer}}

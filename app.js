@@ -123,7 +123,6 @@ app.post('/guest/guest-account', function(req, res) {
     parameters.push(req.body['first_name']);
     parameters.push(req.body['last_name']);
     parameters.push(req.body['vibe']);
-    console.log(parameters);
     
 
     db.query("INSERT INTO users (`email`, `password`, `first_name`, `last_name`, `vibe`)" 
@@ -139,7 +138,6 @@ app.post('/guest/guest-account', function(req, res) {
 
 //GUEST BOOKING
 app.get('/guest/guest-booking', auth.loggedIn, function(req, res){
-    console.log(req.user)
     var callbackCount = 0;
     var context = {};
     var db = req.app.get('db');
@@ -164,7 +162,6 @@ app.post('/guest/guest-booking', auth.loggedIn, function(req, res){
     function complete(){
         callbackCount++;
         if(callbackCount >= 1){
-            console.log(req.body);
 
         }
     }

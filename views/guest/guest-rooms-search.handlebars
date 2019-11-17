@@ -1,37 +1,31 @@
   {{> guest-header}}
-    <main>
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <h1>Rooms - View Search Results</h1>
-                        <table class="table">
-                            <thead>
+<main>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="header-bar">Rooms - View Search Results</h1>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each data}}
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Description</th>
+                                    <td>{{this.room_id}}</td>
+                                    <td>{{this.room_name}}</td>
+                                    <td>{{this.room_description}}</td>
                                 </tr>
-                            </thead>
-                            <tbody>
-        {{#each data}}
-            <tr>
-                <td>{{this.room_id}}</td>
-                <td>{{this.room_name}}</td>
-                <td>{{this.room_description}}</td>
-            </tr>
-        {{/each}}
-                                </tr>
-                            </tbody>
-                        </table>     
-                    </div>
+                            {{/each}}
+                        </tbody>
+                    </table>     
                 </div>
             </div>
-        </main>
-        <script type="text/javascript" src="assets/js/scripts.js"></script>
-    </body>
-</html>
-
-
-
-    </main>
+        </div>
+    </div>
+</main>
 {{> footer}}
