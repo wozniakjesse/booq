@@ -1,3 +1,5 @@
+const Booking = require('../models/Booking');
+
 module.exports = function(db, moment) {
     function getRooms(res, db, context, complete){
         db.query("SELECT id, name, description FROM rooms", function(error, results, fields){
@@ -53,6 +55,28 @@ module.exports = function(db, moment) {
         })
     }
 
+    // This is O(7n) time - could be improved, but n is small
+    const sortWeeklyBookings = function(dates, start, end) {
+        const sorted = [];
+        
+        let it = moment(start); // date iterator
+        while (it.isSameOrBefore(end)) {
+            const date = {
+                date: it.format('dddd MMMM Do'),
+                bookings: []
+            }
+            
+            for (booking of dates)
+                if (booking.bookedOn(it))
+                    date.bookings.push(booking);
+                    
+            sorted.push(date);
+            it.add(1, 'day');
+        }
+        
+        return sorted;
+    };
+    
     const getWeeklyBookings = function(start, end) {
         return new Promise(function(resolve, reject) {
             let sql = "SELECT b.date_in, b.date_out, b.hot_dogs, b.pancakes, "+
@@ -66,19 +90,30 @@ module.exports = function(db, moment) {
             "LEFT JOIN class_bookings as cl ON cl.booking_id = b.id "+
             "LEFT JOIN dance_classes as dc ON cl.class_id = dc.id "+
             "WHERE b.date_in >= ? AND b.date_in <= ? "+
-            "GROUP BY b.id;";
+            "GROUP BY b.id "+
+            "ORDER BY b.date_in;";
             
             db.query(sql, [start.format('YYYY-M-D'), end.format('YYYY-M-D')], function(err, results, fields) {
                 if (err)
                     reject(err);
                     
                 results = results.map(function(row) {
-                    row.date_in = moment(row.date_in).format('YYYY-M-D').toString();
-                    row.date_out = moment(row.date_out).format('YYYY-M-D').toString();
-                    return row;
+                    const b = new Booking(
+                        row.date_in,
+                        row.date_out,
+                        row.room,
+                        row.first_name,
+                        row.last_name,
+                        row.vibe,
+                        row.cat_name,
+                        row.classes,
+                        row.hot_dogs,
+                        row.pancakes
+                    );
+                    return b;
                 });
 
-                resolve(results);
+                resolve(sortWeeklyBookings(results, start, end));
             });
         });
     };

@@ -9,32 +9,33 @@
                     <h2>Users</h2>
                     <p><a href="/admin/userlist">User List</a></p>
                     <h2>Bookings for {{start}} - {{end}}</h2>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Dates</th>
-                                <th>Guest</th>
-                                <th>Room</th>
-                                <th>Cat</th>
-                                <th>Hot Dogs</th>
-                                <th>Pancakes</th>
-                                <th>Dance Classes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{#each bookings}}
+                    {{#each bookings}}
+                        <h3>{{date}}</h3>
+                        <table class="table">
+                            <thead>
                                 <tr>
-                                    <td>{{date_in}} to {{date_out}}</td>
-                                    <td>{{first_name}} {{last_name}}</td>
-                                    <td>{{room}}</td>
-                                    <td>{{cat_name}}</td>
-                                    <td>{{hot_dogs}}</td>
-                                    <td>{{pancakes}}</td>
-                                    <td>{{classes}}</td>
+                                    <th>Guest</th>
+                                    <th>Room</th>
+                                    <th>Cat</th>
+                                    <th>Hot Dogs</th>
+                                    <th>Pancakes</th>
+                                    <th>Dance Classes</th>
                                 </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>         
+                            </thead>
+                            <tbody>
+                                {{#each bookings}}
+                                    <tr>
+                                        <td>{{name}}</td>
+                                        <td>{{room}}</td>
+                                        <td>{{cat}}</td>
+                                        <td>{{hotDogs}}</td>
+                                        <td>{{pancakes}}</td>
+                                        <td>{{classes}}</td>
+                                    </tr>
+                                {{/each}}
+                            </tbody>
+                        </table> 
+                    {{/each}}        
                 </div>
             </div>
         </div>
