@@ -91,8 +91,8 @@ app.get('/login', function(req, res) {
     res.status(200).render('login',  context);
 });
 
-app.post('/login', passport.authenticate('local', { successRedirect: '/',
-													failureRedirect: '/guest/guest-account',
+app.post('/login', passport.authenticate('local', { successRedirect: '/guest/guest-booking',
+													failureRedirect: '/login',
 													failureFlash: false }));
                                                     
 app.get('/login-test', auth.loggedIn, function(req, res) {
