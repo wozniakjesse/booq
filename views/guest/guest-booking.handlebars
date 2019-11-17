@@ -26,7 +26,8 @@
 
                         <div class="form-group">
                             <label for="cat_id"><b>CAT</b></label>
-                            <select class="form-control col-12 col-md-6" name="cat_id" required>
+                            <select class="form-control col-12 col-md-6" name="cat_id">
+                                <option value="">None</option>
                                 {{#each cats}}
                                  <option value="{{id}}"> 
                                      <td>{{name}}</td>
