@@ -138,7 +138,7 @@ app.post('/guest/guest-account', function(req, res) {
         if(err) 
             {throw err;}
     })
-    res.redirect('/');
+    res.redirect('/login');
     })
 })
 
