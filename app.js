@@ -83,6 +83,13 @@ app.get('/contact', function(req, res) {
     res.status(200).render('contact', context);
 });
 
+app.get('/links', function(req, res) {
+    const context = {
+        title: strings.getPageTitle('Links')
+    };
+    res.status(200).render('links', context);
+});
+
 app.get('/login', function(req, res) {
     const context = {
         title: strings.getPageTitle('Login')
@@ -91,7 +98,7 @@ app.get('/login', function(req, res) {
     res.status(200).render('login',  context);
 });
 
-app.post('/login', passport.authenticate('local', { successRedirect: '/guest/guest-booking',
+app.post('/login', passport.authenticate('local', { successRedirect: '/links',
 													failureRedirect: '/login',
 													failureFlash: false }));
                                                     
