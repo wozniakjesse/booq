@@ -1,0 +1,39 @@
+{{> guest-header}}
+{{> admin-header}}
+<main>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Dance Classes - View All</h1>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Edit / Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tbody>
+                                {{#each classes}}
+                                    <tr>
+                                        <td>{{id}}</td>
+                                        <td>{{name}}</td>
+                                        <td>{{description}}</td>
+                                        <td>
+                                            <a class="btn btn-primary" href="/admin/classes/edit/{{id}}">Edit</a>
+                                            <a class="btn btn-danger delete-button" href="/admin/classes/delete/{{id}}">Delete</a>
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                            </tbody>
+                        </tbody>
+                    </table>
+                    <p><a class="btn btn-primary" href="/admin/classes/add">Add Dance Class</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
