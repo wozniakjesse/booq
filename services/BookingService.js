@@ -38,6 +38,14 @@ module.exports = function(db, moment) {
 
 
     function insertBooking(res, req, db, complete){
+        const today = new Date().toJSON().slice(0, 10)
+        if ((req.body.date_in < today) || (req.body.date_in > req.body.date_out)){
+            req = {}
+            res.redirect('guest-booking')
+        }else{
+
+
+        var classBookings = []
         const classIds = req.body.class_id;
         const catId = req.body.cat_id.length ? req.body.cat_id : null;
         var sql = "INSERT INTO bookings (room_id, cat_id, date_in, date_out, "
@@ -50,13 +58,19 @@ module.exports = function(db, moment) {
                 res.end();
             }else{
                 const bookingId = results.insertId;
-                sql = "INSERT INTO class_bookings (booking_id, class_id) VALUES ?;";
-                const classBookings = classIds.map(function(id) {
+                if (classIds.length == 1){
+                sql = "INSERT INTO class_bookings (booking_id, class_id) VALUES (?)";
+                    classBookings.push(bookingId)
+                    classBookings.push(parseInt(classIds))
+                }else{
+                classBookings = classIds.map(function(id) {
+                    sql = "INSERT INTO class_bookings (booking_id, class_id) VALUES ?";
                     const arr = [];
                     arr.push(bookingId);
                     arr.push(parseInt(id));
                     return arr;
                 });
+            }
                 db.query(sql, [classBookings], function(error, results, fields) {
                     if(error){
                         res.write(JSON.stringify(error));
@@ -68,7 +82,7 @@ module.exports = function(db, moment) {
             }
             complete();
         })
-    }
+    }}
 
     // This is O(7n) time - could be improved, but n is small
     const sortWeeklyBookings = function(dates, start, end) {
