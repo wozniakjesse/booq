@@ -1,7 +1,8 @@
 {{> guest-header}}
 
 <main>
-    <body onload="window.alert('TIME TRAVELING HOMEYS MUST CONFORM TO MORTAL TIME CONSTRAINTS')"></body>
+    <body onload="if ({{req.user.msg}}){console.log({{req.user.msg}})
+    window.alert({{req.user.msg}})}"></body>
     <div class="section">
         <div class="container">
             <div class="row">
