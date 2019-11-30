@@ -1,47 +1,45 @@
 const Booking = require('../models/Booking');
 
 module.exports = function(db, moment) {
-    function getRooms(res, db, context, complete){
-        db.query("SELECT id, name, description FROM rooms", function(error, results, fields){
-            if(error){
-                res.write(JSON.stringify(error));
-                res.end();
-            }
-            context.rooms  = results;
-            complete();
+    const getRooms = function() {
+        return new Promise(function(resolve, reject) {
+            db.query('SELECT `id`, `name`, `description` FROM `rooms`;', function(err, rooms) {
+                if (err)
+                    reject(err);
+                resolve(rooms);
+            });
         });
     }
 
     
 
-    function getCats(res, db, context, complete){
-        db.query("SELECT id, name, vibe from cats", function(error, results, fields){
-            if(error){
-                res.write(JSON.stringify(error));
-                res.end();
-            }
-            context.cats = results;
-            complete();
+    const getCats = function() {
+        return new Promise(function(resolve, reject) {
+            db.query('SELECT `id`, `name`, `vibe` FROM `cats`;', function(err, cats) {
+                if (err)
+                    reject(err);
+                resolve(cats);
+            });
         });
     }
 
-    function getClasses(res, db, context, complete){
-        db.query("SELECT id, name, description from dance_classes", function(error, results, fields){
-            if(error){
-                res.write(JSON.stringify(error));
-                res.end();
-            }
-            context.classes = results;
-            complete();
+    const getClasses = function() {
+        return new Promise(function(resolve, reject) {
+            db.query('SELECT `id`, `name`, `description` FROM `dance_classes`;', function(err, classes) {
+                if (err)
+                    reject(err);
+                resolve(classes);
+            });
         });
     }
 
 
-    function insertBooking(res, req, db, complete){
+    function insertBooking(res, req, db){
         const today = new Date().toJSON().slice(0, 10)
         if ((req.body.date_in < today) || (req.body.date_in > req.body.date_out)){
-            req = {}
-            res.redirect('guest-booking')
+            context = req.body 
+            req.body = {}
+            res.render('guest/guest-booking-error')
         }else{
 
 
@@ -80,7 +78,6 @@ module.exports = function(db, moment) {
                     }
                 });
             }
-            complete();
         })
     }}
 
