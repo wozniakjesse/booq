@@ -262,6 +262,18 @@ li.flash:before {
     top: 14px;
     z-index: 10;
 }
+
+#main-navigation a.header-guest-button {
+	background-color: teal;
+    color: #000;
+    font-size: 16px;
+    padding: 10px 20px;
+    position: absolute;
+    right: 0px;
+    text-transform: uppercase;
+    top: 14px;
+    z-index: 10;
+}
 .admin-navbar li {
 	margin-bottom: 0px;
 }
